@@ -32,8 +32,9 @@ def sharpeRatio(data):
 
 def returnRate(data):
    # Plot asset value over time
-#   data['Asset'].plot(kind='line', figsize=(8, 4), title='Asset Over Time')
-#   plt.gca().spines[['top', 'right']].set_visible(False)
+  data['Asset'].plot(kind='line', figsize=(8, 4), title='Asset Over Time')
+  plt.gca().spines[['top', 'right']].set_visible(False)
+  plt.show()
 
   cur_asset_value = data['Asset'].iloc[-1]
   init_asset_value = data['Asset'].iloc[0]

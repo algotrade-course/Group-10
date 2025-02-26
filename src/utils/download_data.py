@@ -5,7 +5,7 @@ import pandas as pd
 with open('config/database.json') as f:
    db_info = json.load(f)
 
-def connect_db():
+def connect_db(in_sample=True):
     with psycopg.connect(
       host=db_info['host'],
       port=db_info['port'],
@@ -15,26 +15,40 @@ def connect_db():
     # Open a cursor to perform database operations
       with conn.cursor() as cur:
 
-         # Execute a query
-         cur.execute("""
-               SELECT m.datetime, m.tickersymbol, m.price, v.quantity
-               FROM "quote"."matched" m
-               LEFT JOIN "quote"."total" v
-               ON m.tickersymbol = v.tickersymbol
-               and m.datetime =  v.datetime
-               where m.datetime between '2023-1-1' and '2024-12-31'
-               and m.tickersymbol LIKE 'VN30F23%' OR m.tickersymbol LIKE 'VN30F24%'
-         """)
+         if in_sample:
+            # Execute a query
+            cur.execute("""
+                  SELECT m.datetime, m.tickersymbol, m.price, v.quantity
+                  FROM "quote"."matched" m
+                  LEFT JOIN "quote"."total" v
+                  ON m.tickersymbol = v.tickersymbol
+                  and m.datetime =  v.datetime
+                  where m.datetime between '2023-1-1' and '2024-12-31'
+                  and m.tickersymbol LIKE 'VN30F23%' OR m.tickersymbol LIKE 'VN30F24%'
+            """)
 
-         # Use fetchall() to get all the data of the query.
-         # Note: fetchall() can be costly and inefficient.
-         # Other efficient ways have been discussed extensively on the Internet. Or you can ask ChatGPT ;)
-         in_sample_data = cur.fetchall()
+            # Use fetchall() to get all the data of the query.
+            # Note: fetchall() can be costly and inefficient.
+            # Other efficient ways have been discussed extensively on the Internet. Or you can ask ChatGPT ;)
+            in_sample_data = cur.fetchall()
 
-         # Print the total number of ticks of that day
-         print(f'Total number of tick: {len(in_sample_data)}')
-
-    return in_sample_data
+            # Print the total number of ticks of that day
+            print(f'Total number of tick: {len(in_sample_data)}')
+            save_data(in_sample_data, 'database/indata.csv')
+         else:
+            cur.execute("""
+                  SELECT m.datetime, m.tickersymbol, m.price, v.quantity
+                  FROM "quote"."matched" m
+                  LEFT JOIN "quote"."total" v
+                  ON m.tickersymbol = v.tickersymbol
+                  and m.datetime =  v.datetime
+                  where m.datetime between '2021-1-1' and '2022-12-31'
+                  and m.tickersymbol LIKE 'VN30F21%' OR m.tickersymbol LIKE 'VN30F22%'
+            """)
+            out_sample_data = cur.fetchall()
+            print(f'Total number of tick: {len(out_sample_data)}')
+            save_data(out_sample_data, 'database/outdata.csv')
+    
 
 def save_data(data, file_path):
    df = pd.DataFrame(data, columns=['datetime', 'tickersymbol', 'price', 'quantity'])
@@ -61,5 +75,4 @@ def load_data(file_path):
    return ohlc
 
 
-# in_sample_data = connect_db()
-# save_data(in_sample_data, 'database/indata.csv')
+# in_sample_data = connect_db(True)

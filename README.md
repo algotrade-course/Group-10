@@ -2,7 +2,7 @@
 
 Template repository of a Plutus Project.
 
-This templte project sturcture also specifies how to store and structure the source code and report of a standard Plutus Project.
+This template project sturcture also specifies how to store and structure the source code and report of a standard Plutus Project.
 
 This `README.md` file serves as an example how a this will look like in a standard Plutus project. Below listed out the sample section.
 
