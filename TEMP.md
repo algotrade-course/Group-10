@@ -50,33 +50,33 @@ A crossover between short-term and long-term momentum signals can indicate poten
   seed_value = 0
 
 - **After Optimization parameters**:
-  - `short_ema = 12`
-  - `long_ema = 32`
-  - `signal_ema = 14`
-  - `window_sma = 48`
-  - `CUT_LOSS_THRES = -9`
+  - `short_ema = 16`
+  - `long_ema = 28`
+  - `signal_ema = 12`
+  - `window_sma = 49`
+  - `CUT_LOSS_THRES = -7`
 - **Result**:
   - With optimized parameters:
-   - Total asset after 2 year: 61050000.00
-   - Total transaction: 143
-   - Return rate: 52.62%
-   - Sharpe ratio: 0.83
-   - Max Drawdown: -20.06%
+   - Total asset after 2 year: 81636000.00
+   - Total transaction: 147
+   - Return rate: 36.06%
+   - Sharpe ratio: 0.76
+   - Max Drawdown: -16.69%
 ![alt text](image/optimized.png)
 
 ## 7. Out-sample Backtesting
 - **Data**: Backtest on data of 2 years from 2021 to 2022
 - **Parameters**: Take from the most optimized parameters of in-sample data
-  - `short_ema = 12`
-  - `long_ema = 32`
-  - `signal_ema = 14`
-  - `window_sma = 48`
-  - `CUT_LOSS_THRES = -9`
+  - `short_ema = 16`
+  - `long_ema = 28`
+  - `signal_ema = 12`
+  - `window_sma = 49`
+  - `CUT_LOSS_THRES = -7`
 - **Result**:
-   - Total asset after 2 year: 69330000.00
-   - Total transaction: 173
-   - Return rate: 21.75%
-   - Sharpe ratio: 0.39
-   - Max Drawdown: -55.48%
+   - Total asset after 2 year: 72010000.00
+   - Total transaction: 175
+   - Return rate: 26.22%
+   - Sharpe ratio: 0.44
+   - Max Drawdown: -54.13%
 ![alt text](image/outtesting.png)
 

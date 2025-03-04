@@ -1,7 +1,7 @@
 from ..optimizer.position import *
 
 
-def backtest(data, signals, loss_threshold, initial_asset=40000000):
+def backtest(data, signals, loss_threshold, initial_asset=60000000):
     prev_date = None
     trading_data = data.copy()
     asset_value = initial_asset

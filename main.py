@@ -40,7 +40,7 @@ def main(in_sample=True):
       window = study.best_params['window']
       CUT_LOSS_THRES = study.best_params['CUT_LOSS_THRES']
       signals, data = strategy.generate_signals(ohlc, short_ema, long_ema, signal_ema, window)
-      data = backtest(data, signals, CUT_LOSS_THRES)
+      data = backtest(data, signals, CUT_LOSS_THRES, INITIAL_ASSET)
       evaluation(data)
    else:
       with open('config/best_params.json', 'r') as f:
