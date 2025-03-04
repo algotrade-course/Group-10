@@ -75,4 +75,5 @@ def load_data(file_path):
    return ohlc
 
 
-# in_sample_data = connect_db(True)
+# connect_db(True) # in-sample data
+# connect_db(False) # out-sample data

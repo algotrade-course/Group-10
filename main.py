@@ -9,6 +9,7 @@ import json
 
 
 def main(in_sample=True):
+   INITIAL_ASSET = 60000000
    if in_sample:
       # load in-sample data and apply the strategy
       ohlc = load_data('database/indata.csv')
@@ -17,11 +18,13 @@ def main(in_sample=True):
       # plot(data, signals)
 
       # backtest the strategy and evaluate the performance
-      data = backtest(data, signals, -8)
+      data = backtest(data, signals, -8, INITIAL_ASSET)
       evaluation(data)
 
       # optimize the strategy
-      study = optuna.create_study(direction='maximize')
+      seed_value = 0
+      sampler = optuna.samplers.TPESampler(seed=seed_value)
+      study = optuna.create_study(sampler=sampler, direction='maximize')
       study.optimize(lambda trial: objective(trial, ohlc), n_trials=150, show_progress_bar=True)
 
       print("Best parameters: ", study.best_params)
@@ -46,8 +49,11 @@ def main(in_sample=True):
       ohlc = load_data('database/outdata.csv')
       strategy = MovingAverageCrossoverStrategy()
       signals, data = strategy.generate_signals(ohlc, best_params['short_ema'], best_params['long_ema'], best_params['signal_ema'], best_params['window'])
-      data = backtest(data, signals, best_params['CUT_LOSS_THRES'])
+      data = backtest(data, signals, best_params['CUT_LOSS_THRES'], INITIAL_ASSET)
+      # signals, data = strategy.generate_signals(ohlc, 12, 25, 17, 49)
+      # data = backtest(data, signals, -8, 40000000)
       evaluation(data)
 
 if __name__ == "__main__":
+   # main(True)
    main(False)
