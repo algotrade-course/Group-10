@@ -11,11 +11,12 @@ A crossover between the MACD line and the signal line can indicate shifts in mom
   - The MACD line crosses below the MACD signal line, signaling bearish momentum.
   - The price is below the 50-period SMA, confirming a downtrend.
 
-**Position Sizing and Risk Management:**
+**Position Sizing**
 
 - Before entering a position, the system calculates the margin required for the trade using the leverage ratio.
 - A trade is only executed if there are enough funds in the asset balance to cover the required margin.
 - If there are insufficient funds, the trade is not executed, preventing over-leveraging.
+
 **Trading Tactics:**
 
 - Only one trade is open at a time to reduce risk and avoid overexposure.
