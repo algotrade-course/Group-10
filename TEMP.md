@@ -1,5 +1,50 @@
 ## 1. Trading Hypothesis
-A crossover between short-term and long-term momentum signals can indicate potential trading opportunities. This strategy is more effective in trending markets and on higher timeframes, where price movements follow a clearer direction. However, in ranging markets or on lower timeframes, it often generates false signals due to market noise and frequent reversals. To improve accuracy and filter out weak signals, an additional trend confirmation indicator is used to ensure trades align with the overall market direction.
+A crossover between the MACD line and the signal line can indicate shifts in momentum, signaling potential entry or exit points. This strategy tends to perform best in trending markets and on higher timeframes, where price movements exhibit clearer directional trends. However, in ranging or choppy market conditions, MACD crossovers often generate false signals due to frequent fluctuations around the zero line. To enhance reliability and reduce false trades, an additional trend confirmation indicator, such as a long-term Simple Moving Average (SMA), is incorporated to ensure trades are only executed in alignment with the prevailing market trend. By combining MACD signals with trend confirmation, this strategy aims to capture strong momentum moves while minimizing the impact of market noise.
+### When to Open the Position
+**Entry Conditions:**
+
+- **A long position is opened when:**
+  - The MACD line crosses above the MACD signal line, indicating bullish momentum.
+  - The price is above the 50-period Simple Moving Average (SMA), confirming an uptrend.
+
+- **A short position is opened when:**
+  - The MACD line crosses below the MACD signal line, signaling bearish momentum.
+  - The price is below the 50-period SMA, confirming a downtrend.
+
+**Position Sizing and Risk Management:**
+
+- Before entering a position, the system calculates the margin required for the trade using the leverage ratio.
+- A trade is only executed if there are enough funds in the asset balance to cover the required margin.
+- If there are insufficient funds, the trade is not executed, preventing over-leveraging.
+**Trading Tactics:**
+
+- Only one trade is open at a time to reduce risk and avoid overexposure.
+- Trades are only executed if trend confirmation is present (MACD crossover + SMA direction).
+- If a trade is executed, it is tracked continuously until an exit condition is met.
+- Each trade is subject to strict entry and exit criteria, ensuring that trades align with strong momentum moves rather than short-term fluctuations.
+
+### When to Close the Position
+**Take-Profit and Stop-Loss Conditions:**
+- A trade is closed if it reaches a predefined profit or loss threshold.
+- The stop-loss threshold is set at -8 points, meaning a trade will be exited if the loss exceeds this level.
+- The take-profit threshold is 40 points, ensuring profitable trades are closed before market reversals.
+
+**Exit signal: MACD histogram**
+
+- A long position is closed if the histogram turns negative.
+- A short position is closed if the histogram turns positive.
+
+**Position Sizing:**
+
+- Each trade’s profit or loss is adjusted for transaction fees before being realized.
+- The margin required for each position is calculated using a margin ratio (0.175) and a leverage factor (AR_TARGET = 0.8), ensuring that trades are sized appropriately based on available capital.
+- If an open position meets the exit conditions, its profit or loss is added to the total asset value.
+
+**Trading Tactics:**
+
+- Positions are only closed when necessary to avoid unnecessary trading fees and maximize returns.
+- Unrealized profit/loss is tracked separately to assess the performance of open trades.
+- If a position does not meet the exit criteria, it remains open, and unrealized profit/loss continues to be updated.
 
 ## 2. Data
 - **Target Market**: VN30 Index Future Contract – VN30F1
