@@ -1,17 +1,22 @@
 from ..metrics.evaluation import sharpeRatio
 from ..strategy.backtest import backtest
-from ..strategy.model import MovingAverageCrossoverStrategy
+from ..strategy.crossover_model import MovingAverageCrossoverStrategy
+
+
 
 def objective(trial, ohlc):
-    short_ema = trial.suggest_int('short_ema', 7, 20)
-    long_ema = trial.suggest_int('long_ema', 21, 40)
-    signal_ema = trial.suggest_int('signal_ema', 7, 21)
-    window = trial.suggest_int('window', 40, 80)
-    CUT_LOSS_THRES = trial.suggest_int('CUT_LOSS_THRES', -15, -5)
+    short_ema = trial.suggest_int('short_ema', 7, 14)
+    long_ema = trial.suggest_int('long_ema', 14, 28)
+    signal_ema = trial.suggest_int('signal_ema', 7, 14)
+    window = trial.suggest_int('window', 40, 60)
+
+    CUT_LOSS_THRES = trial.suggest_int('CUT_LOSS_THRES', -20, -10)
+    TAKE_PROFIT_THRES = trial.suggest_int('TAKE_PROFIT_THRES', 15, 30)
+    INITIAL_ASSET = 50000000
 
     strategy = MovingAverageCrossoverStrategy()
-    signals, data = strategy.generate_signals(ohlc, short_ema, long_ema, signal_ema, window)
-    data = backtest(data, signals, CUT_LOSS_THRES)
+    data = strategy.compute_macd(ohlc, short_ema, long_ema, signal_ema, window)
+    data, _ = backtest(data, TAKE_PROFIT_THRES, CUT_LOSS_THRES, INITIAL_ASSET)
 
    #  data['daily_return'] = data['Asset'].pct_change()
     data = data.dropna()

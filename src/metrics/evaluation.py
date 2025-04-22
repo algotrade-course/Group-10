@@ -43,7 +43,23 @@ def returnRate(data):
   print(f"Return rate: {accum_return_rate:.2f}")
   return accum_return_rate
 
-def evaluation(data):
+def fitness(data, risk_aversion=0.5):
+  accum_return_rate = returnRate(data)
+  mdd = maximumDrawdown(data)
+  fitness = accum_return_rate - risk_aversion * abs(mdd)
+  print(f"Fitness: {fitness:.2f}")
+  return fitness
+
+def turnover(total_trading_volume, initial_asset):
+  # Calculate the turnover rate
+  turnover_rate = total_trading_volume / (initial_asset / 100000) * 100
+  print(f"Turnover rate: {turnover_rate:.2f}")
+  return turnover_rate
+
+
+def evaluation(data, total_trading_volume):
   accum_return_rate = returnRate(data)
   sharpe = sharpeRatio(data)
   mdd = maximumDrawdown(data)
+  # fitness_score = fitness(data)
+  # turnover_rate = turnover(total_trading_volume, data['Asset'].iloc[0])
