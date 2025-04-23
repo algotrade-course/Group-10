@@ -178,12 +178,12 @@ You can download the necessary data files from [Google Drive](https://drive.goog
 
 ![alt text](image/optimize_history.png)
 - **After Optimization parameters**:
-  - `short_ema = 8`
-  - `long_ema = 28`
-  - `signal_ema = 8`
-  - `window_sma = 49`
-  - `CUT_LOSS_THRES = -12`
-  - `TAKE_PROFIT_THRES = 29`
+  - `short_ema = 7`
+  - `long_ema = 26`
+  - `signal_ema = 9`
+  - `window_sma = 51`
+  - `CUT_LOSS_THRES = -13`
+  - `TAKE_PROFIT_THRES = 28`
 - **Result**:
   - With optimized parameters:
    - Total asset after a year: 73,102,000
@@ -196,12 +196,12 @@ You can download the necessary data files from [Google Drive](https://drive.goog
 # Out-sample Backtesting
 - **Data**: Backtest on data of 3 years from 2021 to 2023
 - **Parameters**: Take from the most optimized parameters of in-sample data
-  - `short_ema = 8`
-  - `long_ema = 28`
-  - `signal_ema = 8`
-  - `window_sma = 49`
-  - `CUT_LOSS_THRES = -12`
-  - `TAKE_PROFIT_THRES = 29`
+  - `short_ema = 7`
+  - `long_ema = 26`
+  - `signal_ema = 9`
+  - `window_sma = 51`
+  - `CUT_LOSS_THRES = -13`
+  - `TAKE_PROFIT_THRES = 28`
 - **Command**:
     ```terminal
   python main.py --data_file database/2021.csv --in_sample False
@@ -235,12 +235,10 @@ Unfortunately, the dataset provided in the course was not sufficient for our gro
 # Conclusion
 This project developed a robust MACD-EMA strategy for VN30 Index Futures, demonstrating consistent profitability across both in-sample (2024) and out-of-sample (2021–2023) periods. Key takeaways:
 
-- Optimization Matters – Fine-tuning parameters with Optuna boosted returns by 62% (28% → 46%) and improved risk-adjusted performance (Sharpe: 1.42 → 2.68).
+- Optimization Matters – Fine-tuning parameters with Optuna boosted returns by 17.5% (28.7% → 46.2%) and improved risk-adjusted performance (Sharpe: 1.43 → 2.67).
 
-- Trend Filters Work – Combining MACD crossovers with 50-EMA trend confirmation reduced false signals, evidenced by lower drawdowns (-9.6% → -6.3%).
+- Trend Filters Work – Combining MACD crossovers with 50-EMA trend confirmation reduced false signals, evidenced by lower drawdowns (-9.59% → -7.25%).
 
-- Real-World Viability – The strategy generated positive returns in all test years, including volatile markets (2022: +10.7%), proving adaptability.
+- Real-World Viability – The strategy generated positive returns in all test years, including volatile markets (2021: +16.45%, 2022: +14.99%, 2023: +25.09%), proving adaptability.
 
-The strategy exhibited strong generalization capabilities, delivering positive returns across diverse market conditions in out-of-sample testing. Future work could explore extending the model to other derivatives markets, incorporating additional risk management techniques, or integrating machine learning for dynamic parameter adjustment.
- 
-Overall, this project highlights the potential of disciplined technical analysis and systematic optimization in enhancing trading performance.
+Overall, the strategy exhibited strong generalization capabilities, delivering positive returns across diverse market conditions in out-of-sample testing. Future work could explore extending the model to other derivatives markets, incorporating additional risk management techniques, or integrating machine learning for dynamic parameter adjustment.
