@@ -2,9 +2,39 @@
 The project aims to combine the Moving Average Convergence Divergence (MACD) and Exponential Moving Averages (EMA) to identify trends and generate profitable trades in the derivatives market. By utilizing EMAs for trend confirmation and MACD for momentum signals, traders can enhance entry and exit precision. Backtesting on historical data demonstrates that this strategy improves trend-capturing accuracy while minimizing false signals. 
 
 # Introduction
-Trend-following strategies in derivatives trading often struggle with false signals during sideways markets. This project addresses this challenge by developing a disciplined approach that combines MACD momentum signals with SMA trend confirmation, applied to the VN30 Index Futures.
+Trend-following strategies in derivatives trading often struggle with false signals during sideways markets. This project addresses this challenge by developing a disciplined approach that combines MACD momentum signals with EMA trend confirmation, applied to the VN30 Index Futures.
 The goal is to create a systematic, rules-based strategy that improves trade accuracy and risk-adjusted returns. Through rigorous backtesting and parameter optimization across in-sample (2024) and out-sample (2021–2022-2023) data, the method aims to validate its robustness in capturing trends while minimizing drawdowns.
 
+# Background
+
+## EMA (Exponential Moving Average)
+The Exponential Moving Average (EMA) is a weighted moving average that gives more weight to recent prices. It is calculated as:
+
+**EMA<sub>t</sub> = EMA<sub>t-1</sub> + α × (P<sub>t</sub> − EMA<sub>t-1</sub>)**
+
+Where:
+- **EMA<sub>t</sub>** is the EMA at time *t*,
+- **EMA<sub>t-1</sub>** is the previous EMA value,
+- **P<sub>t</sub>** is the current price at time *t*,
+- **α** is the smoothing factor, defined as **α = 2 / (N + 1)**,
+- **N** is the number of periods.
+
+The EMA reacts more quickly to recent price changes compared to the Simple Moving Average (SMA), making it a popular choice for identifying trends in fast-moving markets.
+
+## MACD (Moving Average Convergence Divergence)
+The Moving Average Convergence Divergence (MACD) is a momentum indicator that shows the relationship between two EMAs. It is calculated as:
+
+**MACD = EMA<sub>short</sub> − EMA<sub>long</sub>**
+
+Where:
+- **EMA<sub>short</sub>** is the short-term EMA (e.g., 12-period),
+- **EMA<sub>long</sub>** is the long-term EMA (e.g., 26-period).
+
+The MACD is often paired with a signal line, which is the EMA of the MACD (e.g., 9-period). The difference between the MACD and the signal line is represented as the MACD histogram. Key signals include:
+- **Bullish Signal**: When the MACD crosses above the signal line, indicating upward momentum.
+- **Bearish Signal**: When the MACD crosses below the signal line, indicating downward momentum.
+
+The MACD is widely used for identifying trend reversals, momentum shifts, and potential entry/exit points in trading strategies.
 
 # Trading Hypothesis
 A crossover between the MACD line and the signal line can indicate shifts in momentum, signaling potential entry or exit points. While this strategy performs well in trending markets, it often generates late entries—causing traders to miss early trend opportunities—or false signals in choppy conditions due to fluctuations around the zero line. To improve timing and reliability, we incorporate two key enhancements:
@@ -19,11 +49,13 @@ By combining these conditions, the strategy aims to capture momentum earlier in 
 **Entry Conditions:**
 
 - **A long position is opened when:**
-  - The MACD line crosses above the MACD signal line and the MACD line shows a positive derivative, indicating potential growing bullish momentum.
-  - The price is above the 50-period Exponential Moving Average (EMA), confirming an uptrend.
+  - The MACD line crosses above the MACD signal line.
+  - The MACD line shows a positive derivative, indicating potential growing bullish momentum.
+  - The current closed price is above the 50-period Exponential Moving Average (EMA), confirming an uptrend.
 
 - **A short position is opened when:**
-  - The MACD line crosses below the MACD signal line and the MACD line shows a negative derivative, signaling bearish momentum.
+  - The MACD line crosses below the MACD signal line 
+  - The MACD line shows a negative derivative, signaling bearish momentum.
   - The price is below the 50-period EMA, confirming a downtrend.
 
 **Position Sizing**
@@ -72,6 +104,7 @@ By combining these conditions, the strategy aims to capture momentum earlier in 
 - You can check `utils/download_data.py` to check and modify the SQL command.
 
 ## Data Processing
+- Extracting the all records after 9.00AM and before 14.45PM.
 - After fetching the data into a list, it is converted into a Pandas DataFrame.
 - The dataset is then saved as a CSV file for future use.
 - The datetime column is set as the index, and the price column is converted to a numeric format. The data is resampled to a daily frequency, computing Open, High, Low, and Close (OHLC) values for each day. Any days without trading activity are removed by dropping rows containing NaN values.
@@ -114,17 +147,17 @@ You can download the necessary data files from [Google Drive](https://drive.goog
   - `window_sma = 50`
   - `CUT_LOSS_THRES = -15`
   - `TAKE_PROFIT_THRES = 25`
-  - `INITIAL_ASSET = 50000000 (50 million)`
+  - `INITIAL_ASSET = 50,000,000 (50 million)`
 - **Command**:
   ```terminal
   python main.py
 - **Result**:
   - With initial parameters:
-    - Total asset after a year: 64221000.00
+    - Total asset after a year: 64,351,000
     - Total transactions: 18
-    - Return rate: 28.44%
-    - Sharpe ratio: 1.42
-    - Max Drawdown: -9.61%
+    - Return rate: 28.70%
+    - Sharpe ratio: 1.43
+    - Max Drawdown: -9.59%
   - ![Initial Parameters Result](image/before/2024.png)
 
 ## Optimization
@@ -153,11 +186,11 @@ You can download the necessary data files from [Google Drive](https://drive.goog
   - `TAKE_PROFIT_THRES = 29`
 - **Result**:
   - With optimized parameters:
-   - Total asset after a year: 73022000.00
-   - Total transaction: 15
-   - Return rate: 46.04%
-   - Sharpe ratio: 2.68
-   - Max Drawdown: -6.29%
+   - Total asset after a year: 73,102,000
+   - Total transaction: 14
+   - Return rate: 46.20%
+   - Sharpe ratio: 2.67
+   - Max Drawdown: -7.25%
 ![alt text](image/after/2024.png)
 
 # Out-sample Backtesting
@@ -175,24 +208,24 @@ You can download the necessary data files from [Google Drive](https://drive.goog
   python main.py --data_file database/2022.csv --in_sample False
   python main.py --data_file database/2023.csv --in_sample False
 - **Result of 2021**:
-   - Total asset after a year: 62450000.00
-   - Total transaction: 10
-   - Return rate: 24.90%
-   - Sharpe ratio: 1.39
-   - Max Drawdown: -7.09%
+   - Total asset after a year: 58,227,000
+   - Total transaction: 9
+   - Return rate: 16.45%
+   - Sharpe ratio: 0.94
+   - Max Drawdown: -7.62%
 ![alt text](image/after/2021.png)
 - **Result of 2022**:
-   - Total asset after a year: 55350000.00
-   - Total transaction: 10
-   - Return rate: 10.70%
-   - Sharpe ratio: 0.59
-   - Max Drawdown: -8.78%
+   - Total asset after a year: 57,497,000
+   - Total transaction: 9
+   - Return rate: 14.99%
+   - Sharpe ratio: 0.91
+   - Max Drawdown: -7.73%
 ![alt text](image/after/2022.png)
 - **Result of 2023**:
-   - Total asset after a year: 62134000.00
-   - Total transaction: 19
-   - Return rate: 24.55%
-   - Sharpe ratio: 1.02
+   - Total asset after a year: 62,808,000
+   - Total transaction: 17
+   - Return rate: 25.09%
+   - Sharpe ratio: 1.09
    - Max Drawdown: -11.90%
 ![alt text](image/after/2023.png)
 

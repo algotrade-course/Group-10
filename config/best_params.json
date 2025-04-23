@@ -1,1 +1,1 @@
-{"short_ema": 8, "long_ema": 28, "signal_ema": 8, "window": 49, "CUT_LOSS_THRES": -12, "TAKE_PROFIT_THRES": 29}
+{"short_ema": 7, "long_ema": 26, "signal_ema": 9, "window": 51, "CUT_LOSS_THRES": -13, "TAKE_PROFIT_THRES": 28}

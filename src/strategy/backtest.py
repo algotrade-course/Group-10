@@ -51,8 +51,8 @@ def backtest(ohlc, take_profit, cut_loss, initial_asset):
             continue
         macd_derivative = (macd_history[-1] - macd_history[0]) / len(macd_history)  # Calculate the derivative of MACD
         
-        buy_signal = (macd > macd_signal) and (curr_price >= ema_50) and (histogram <= 3) and (macd_derivative > 0)
-        sell_signal = (macd < macd_signal) and (curr_price <= ema_50) and (histogram >= -3) and (macd_derivative < 0)
+        buy_signal = (macd > macd_signal) and (curr_price >= ema_50) and (histogram <= 3.25) and (macd_derivative > 0)
+        sell_signal = (macd < macd_signal) and (curr_price <= ema_50) and (histogram >= -3.25) and (macd_derivative < 0)
 
         if buy_signal:
             # if not_buy == False:
