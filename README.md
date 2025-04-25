@@ -123,7 +123,7 @@ By combining these conditions, the strategy aims to capture momentum earlier in 
   ```terminal
   git clone https://github.com/algotrade-course/Group-10.git
   cd Group-10
-  pip install -r requirements.txt
+  pip install --upgrade -r requirements.txt
 ## Download Data
 You can download the necessary data files from [Google Drive](https://drive.google.com/drive/folders/1QkcBh4xTLQ2pv0PILrjtK7H73RMYT7PI?usp=drive_link) and put them in your project.
 ## Run the strategy
