@@ -4,3 +4,4 @@ mplfinance
 kafka-python
 numpy
 pandas
+plotly
