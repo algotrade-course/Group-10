@@ -1,3 +1,6 @@
+![Static Badge](https://img.shields.io/badge/PLUTUS-75%25-darkgreen)
+![Static Badge](https://img.shields.io/badge/PLUTUS-Sample-darkblue)
+
 # Abstract
 The project aims to combine the Moving Average Convergence Divergence (MACD) and Exponential Moving Averages (EMA) to identify trends and generate profitable trades in the derivatives market. By utilizing EMAs for trend confirmation and MACD for momentum signals, traders can enhance entry and exit precision. Backtesting on historical data demonstrates that this strategy improves trend-capturing accuracy while minimizing false signals. 
 
